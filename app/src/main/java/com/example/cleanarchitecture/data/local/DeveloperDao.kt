@@ -16,4 +16,7 @@ interface DeveloperDao {
 
     @Query("SELECT * FROM DeveloperTable")
      fun getAllDevelopers(): List<DeveloperTable>
+
+     @Query("UPDATE DeveloperTable SET isFavourite = :isFavourite WHERE username = :username")
+     fun updateDeveloperFavouriteStatus(username: String, isFavourite: Boolean)
 }

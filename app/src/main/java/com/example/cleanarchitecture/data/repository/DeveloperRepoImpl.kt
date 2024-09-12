@@ -19,4 +19,8 @@ class DeveloperRepoImpl @Inject constructor(private val apiService: ApiService, 
         return DevelopersMapper.mapDevelopersTableToDevelopers(repoDao.getAllDevelopers())
     }
 
+    override suspend fun updateDeveloperFavouriteStatus(username: String, isFavourite: Boolean) {
+        repoDao.updateDeveloperFavouriteStatus(username, isFavourite)
+    }
+
 }

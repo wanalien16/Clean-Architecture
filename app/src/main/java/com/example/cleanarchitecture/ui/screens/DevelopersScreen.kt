@@ -44,14 +44,15 @@ val developers by viewModel.data.collectAsState()
 
 Box(modifier = Modifier.fillMaxSize()){
     LazyColumn {
-        items(developers){developer -> CardView(developer)
+        items(developers){
+            developer -> CardView(developer, onFavouriteClicked = {viewModel.toggleFavourite(developer.username,developer.isFavourite)})
         }
     }
 }
 }
 
 @Composable
-fun CardView(developer: Developers){
+fun CardView(developer: Developers, onFavouriteClicked: () -> Unit){
 Card(modifier = Modifier
     .fillMaxWidth()
     .padding(horizontal = 16.dp, vertical = 4.dp)) {
@@ -76,7 +77,7 @@ Row(modifier = Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVerti
 
     }
 
-IconButton(onClick = { /*TODO*/ }) {
+IconButton(onClick = onFavouriteClicked) {
     Icon(imageVector = if (developer.isFavourite) Icons.Default.Favorite
     else Icons.Default.FavoriteBorder, contentDescription = "Add to favourites",
         tint = if (developer.isFavourite) Color.Red else Color.Gray)
