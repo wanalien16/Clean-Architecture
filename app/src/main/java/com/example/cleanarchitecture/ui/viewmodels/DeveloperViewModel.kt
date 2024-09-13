@@ -23,6 +23,8 @@ class DeveloperViewModel @Inject constructor(private val getDeveloperUseCase: Ge
     private val _data = MutableStateFlow<List<Developers>>(emptyList())
     val data: StateFlow<List<Developers>> = _data.asStateFlow()
 
+
+
     init {
         fetchData()
     }
