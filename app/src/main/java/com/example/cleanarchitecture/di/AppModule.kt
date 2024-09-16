@@ -1,6 +1,7 @@
 package com.example.cleanarchitecture.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.cleanarchitecture.data.local.AppDatabase
 import com.example.cleanarchitecture.data.local.DeveloperDao
@@ -60,6 +61,14 @@ object AppModule {
     @Singleton
     fun provideDeveloperDao(database: AppDatabase): DeveloperDao{
         return database.developerDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences{
+
+        return context.getSharedPreferences("app_preferences",Context.MODE_PRIVATE)
+
     }
 
 
