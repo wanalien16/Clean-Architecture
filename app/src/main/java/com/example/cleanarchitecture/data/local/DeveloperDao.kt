@@ -8,7 +8,7 @@ import androidx.room.Upsert
 
 @Dao
 interface DeveloperDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
      fun insertDevelopers(developer: DeveloperTable)
 
     @Query("SELECT * FROM DeveloperTable WHERE isFavourite = 1")

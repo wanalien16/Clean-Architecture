@@ -7,5 +7,6 @@ data class DevelopersDTO(
     val name: String?,
     val username: String,
     val avatar: String,
-    val url: String
+    val url: String,
+    val isFavorite: Boolean?
 )
