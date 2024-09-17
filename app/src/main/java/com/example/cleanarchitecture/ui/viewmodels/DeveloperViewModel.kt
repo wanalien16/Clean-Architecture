@@ -24,9 +24,6 @@ class DeveloperViewModel @Inject constructor(
     private val _data = MutableStateFlow<List<Developers>>(emptyList())
     val data: StateFlow<List<Developers>> = _data.asStateFlow()
 
-    private val _favourite = MutableStateFlow(false)
-    var favourite: StateFlow<Boolean> = _favourite
-
 
     init {
         fetchData()
@@ -43,21 +40,22 @@ class DeveloperViewModel @Inject constructor(
         }
     }
 
-    fun toggleFavourite(username: String, isFavourite: Boolean?) {
+    fun toggleFavourite(username: String, isFavourite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
+//            val newFavouriteStatus = !isFavourite
 
-            if (isFavourite==null){
-                isFavourite = null
-            }
+
             val developer =
-                data.value.find { it.username == username }?.copy(isFavourite = newFavouriteStatus)
+                data.value.find { it.username == username }?.copy(isFavourite = isFavourite)
                     ?: return@launch
-            val developerPosition = data.value.indexOfFirst { it.username == username }.takeIf { it >= 0 } ?:return@launch
+            val developerPosition =
+                data.value.indexOfFirst { it.username == username }.takeIf { it >= 0 }
+                    ?: return@launch
             val newList = data.value.toMutableList()
             newList.removeAt(developerPosition)
             newList.add(developerPosition, developer)
             _data.value = newList
-            updateDeveloperFavouriteUseCase(username, newFavouriteStatus)
+            updateDeveloperFavouriteUseCase(username = username, isFavourite = isFavourite)
 
         }
 

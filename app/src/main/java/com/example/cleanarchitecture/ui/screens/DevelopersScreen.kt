@@ -45,7 +45,7 @@ val developers by viewModel.data.collectAsState()
 Box(modifier = Modifier.fillMaxSize()){
     LazyColumn {
         items(developers){
-            developer -> CardView(developer, onFavouriteClicked = {viewModel.toggleFavourite(developer.username,developer.isFavourite)})
+            developer -> CardView(developer, onFavouriteClicked = {viewModel.toggleFavourite(developer.username,!developer.isFavourite)})
         }
     }
 }

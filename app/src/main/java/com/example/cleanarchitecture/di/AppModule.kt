@@ -63,13 +63,7 @@ object AppModule {
         return database.developerDao()
     }
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences{
 
-        return context.getSharedPreferences("app_preferences",Context.MODE_PRIVATE)
-
-    }
 
 
 }

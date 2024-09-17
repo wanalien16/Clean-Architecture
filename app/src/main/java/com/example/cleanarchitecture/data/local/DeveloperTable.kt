@@ -7,4 +7,5 @@ import androidx.room.PrimaryKey
 data class DeveloperTable(@PrimaryKey val username: String,
                           val avatar: String,
                           val url: String,
-                          val isFavourite: Boolean? = false)
+                          val isFavourite: Boolean = false)
+
