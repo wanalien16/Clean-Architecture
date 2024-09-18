@@ -1,6 +1,6 @@
 package com.example.cleanarchitecture.data.repository
 
-import android.content.SharedPreferences
+
 import android.util.Log
 import com.example.cleanarchitecture.data.local.DeveloperDao
 import com.example.cleanarchitecture.data.local.DeveloperTable

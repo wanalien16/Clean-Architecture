@@ -1,7 +1,12 @@
 package com.example.cleanarchitecture.di
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.example.cleanarchitecture.data.local.AppDatabase
 import com.example.cleanarchitecture.data.local.DeveloperDao
@@ -19,6 +24,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -62,6 +68,12 @@ object AppModule {
     fun provideDeveloperDao(database: AppDatabase): DeveloperDao{
         return database.developerDao()
     }
+
+@Provides
+@Singleton
+fun provideDataStore(app: Application): DataStore<Preferences>{
+    return PreferenceDataStoreFactory.create(produceFile =  { app.preferencesDataStoreFile("settings") })
+}
 
 
 

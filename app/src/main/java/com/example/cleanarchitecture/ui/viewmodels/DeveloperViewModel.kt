@@ -37,6 +37,7 @@ class DeveloperViewModel @Inject constructor(
                 viewModelScope.launch { _data.value = response }
             }.getOrElse { Log.e("error is", it.localizedMessage) }
 
+
         }
     }
 
