@@ -11,10 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.cleanarchitecture.data.remote.ApiService
 import com.example.cleanarchitecture.ui.screens.DevelopersScreen
+import com.example.cleanarchitecture.ui.screens.OnBoardingScreen
 import com.example.cleanarchitecture.ui.theme.CleanArchitectureTheme
 import com.example.cleanarchitecture.ui.viewmodels.DeveloperViewModel
+import com.example.cleanarchitecture.ui.viewmodels.OnBoardingViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,8 +28,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-//    @Inject
-//    lateinit var apiService: ApiService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +46,17 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                   DevelopersScreen()
-//                    Greeting("Android")
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "onboarding" ) {
+                        composable("onboarding") {
+                            val viewModel: OnBoardingViewModel = hiltViewModel()
+                            OnBoardingScreen(viewModel = viewModel, navController = navController)
+                        }
+                        composable("main") {
+                            DevelopersScreen()
+                        }
+                    }
+
                 }
             }
         }
