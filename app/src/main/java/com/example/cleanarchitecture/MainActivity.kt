@@ -1,6 +1,7 @@
 package com.example.cleanarchitecture
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -9,6 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,20 +29,15 @@ import com.example.cleanarchitecture.ui.viewmodels.DeveloperViewModel
 import com.example.cleanarchitecture.ui.viewmodels.OnBoardingViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        val viewModel by viewModels<DeveloperViewModel>()
-
-
-
-
 
         setContent {
             CleanArchitectureTheme {
@@ -46,14 +47,32 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
+                    Timber.tag("ActivityStatus").i("Timber logging is ready");
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "onboarding" ) {
+                    val viewModel: OnBoardingViewModel = hiltViewModel()
+                    var isOnBoardingFinished by remember {
+                        mutableStateOf(false)
+                    }
+                    val onBoardingStatus by viewModel.isOnBoardingFinished
+//
+//                    LaunchedEffect(Unit) {
+////                        isOnBoardingFinished = viewModel.isOnBoardingFinished.value
+//                        viewModel.isOnBoardingFinished.value.let { finished ->
+//                            isOnBoardingFinished = finished
+//                            Log.d("MainActivity", "Start destination set to: ${if (viewModel.isOnBoardingFinished.value) "main" else "onboarding"}")
+//                        }
+//                    }
+                    Log.i("intial status", "$isOnBoardingFinished")
+
+                    NavHost(navController = navController, startDestination = if (onBoardingStatus) "main" else "onboarding")  {
                         composable("onboarding") {
-                            val viewModel: OnBoardingViewModel = hiltViewModel()
+
                             OnBoardingScreen(viewModel = viewModel, navController = navController)
                         }
                         composable("main") {
+
                             DevelopersScreen()
+                            Log.i("After status", "$isOnBoardingFinished")
                         }
                     }
 

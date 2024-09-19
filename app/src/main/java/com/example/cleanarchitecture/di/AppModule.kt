@@ -69,14 +69,6 @@ object AppModule {
         return database.developerDao()
     }
 
-@Provides
-@Singleton
-fun provideDataStore(app: Application): DataStore<Preferences>{
-    return PreferenceDataStoreFactory.create(produceFile =  { app.preferencesDataStoreFile("settings") })
-}
-
-
-
 
 }
 

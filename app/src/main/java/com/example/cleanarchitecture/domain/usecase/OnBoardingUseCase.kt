@@ -1,5 +1,6 @@
 package com.example.cleanarchitecture.domain.usecase
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -8,15 +9,26 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class OnBoardingUseCase @Inject constructor(private val dataStore: DataStore<Preferences>){
+
+    companion object {
+        private const val TAG = "OnboardingUseCase"
+        private val ONBOARDING_FINISHED_KEY = stringPreferencesKey("onboarding_finished")
+
+    }
     suspend fun setOnBoardingFinished(isFinished: Boolean){
         dataStore.edit { preferences->
-            preferences[stringPreferencesKey("onboarding_finished")] = isFinished.toString()
+            preferences[ONBOARDING_FINISHED_KEY] = isFinished.toString()
+            Log.d(TAG, "Onboarding finished set to: $isFinished")
         }
     }
 
     suspend fun isOnBoardingFinished(): Boolean{
         val preferences = dataStore.data.first()
-        return preferences[stringPreferencesKey("onboarding_finished")]?.toBoolean()?:false
+        val finished = preferences[ONBOARDING_FINISHED_KEY]?.toBoolean()?:false
+        Log.d(TAG, "Onboarding finished status retrieved: $finished")
+        return finished
     }
+
+
 
 }

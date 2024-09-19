@@ -24,7 +24,9 @@ fun OnBoardingScreen(viewModel: OnBoardingViewModel, navController: NavControlle
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Welcome to the App")
         Spacer(modifier = Modifier.padding(20.dp))
-        Button(onClick = { viewModel.completeOnBoarding()
+
+        Button(onClick = {
+            viewModel.completeOnBoarding()
         navController.navigate("main"){
             popUpTo("onboarding"){inclusive = true}
         }}) {
