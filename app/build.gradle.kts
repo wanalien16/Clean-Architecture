@@ -94,6 +94,8 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.datastore:datastore-preferences-core:1.1.1")
 
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
 }
 
 kapt {
