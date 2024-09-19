@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val viewModel by viewModels<DeveloperViewModel>()
+
 
         setContent {
             CleanArchitectureTheme {
@@ -54,15 +54,8 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(false)
                     }
                     val onBoardingStatus by viewModel.isOnBoardingFinished
-//
-//                    LaunchedEffect(Unit) {
-////                        isOnBoardingFinished = viewModel.isOnBoardingFinished.value
-//                        viewModel.isOnBoardingFinished.value.let { finished ->
-//                            isOnBoardingFinished = finished
-//                            Log.d("MainActivity", "Start destination set to: ${if (viewModel.isOnBoardingFinished.value) "main" else "onboarding"}")
-//                        }
-//                    }
-                    Log.i("intial status", "$isOnBoardingFinished")
+
+                    Timber.i("intial status", "$isOnBoardingFinished")
 
                     NavHost(navController = navController, startDestination = if (onBoardingStatus) "main" else "onboarding")  {
                         composable("onboarding") {
@@ -72,7 +65,7 @@ class MainActivity : ComponentActivity() {
                         composable("main") {
 
                             DevelopersScreen()
-                            Log.i("After status", "$isOnBoardingFinished")
+                            Timber.i("After status", "$isOnBoardingFinished")
                         }
                     }
 

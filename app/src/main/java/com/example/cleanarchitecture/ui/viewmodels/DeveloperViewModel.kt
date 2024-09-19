@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +34,7 @@ class DeveloperViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 val response = getDeveloperUseCase()
-                Log.i("getting", "data $response")
+                Timber.i("getting", "data $response")
                 viewModelScope.launch { _data.value = response }
             }.getOrElse { Log.e("error is", it.localizedMessage) }
 

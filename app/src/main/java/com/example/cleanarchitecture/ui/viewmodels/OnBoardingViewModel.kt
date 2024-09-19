@@ -10,6 +10,7 @@ import com.example.cleanarchitecture.domain.usecase.OnBoardingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,9 +21,9 @@ class OnBoardingViewModel @Inject constructor(private val onBoardingUseCase: OnB
 
     init {
         viewModelScope.launch {
-//            Log.i("datastore status", "${onBoardingUseCase.isOnBoardingFinished()}")
+//            Timber.i("datastore status", "${onBoardingUseCase.isOnBoardingFinished()}")
             _isOnBoardingFinished.value = onBoardingUseCase.isOnBoardingFinished()
-            Log.d("OnboardingViewModel", "Onboarding finished status initialized: ${_isOnBoardingFinished.value}")
+            Timber.d("OnboardingViewModel", "Onboarding finished status initialized: ${_isOnBoardingFinished.value}")
 
         }
     }
@@ -31,9 +32,9 @@ class OnBoardingViewModel @Inject constructor(private val onBoardingUseCase: OnB
         viewModelScope.launch{
             onBoardingUseCase.setOnBoardingFinished(true)
             val status = onBoardingUseCase.isOnBoardingFinished()
-            Log.d("status is","$status")
+            Timber.d("status is","$status")
             _isOnBoardingFinished.value = true
-            Log.d("OnboardingViewModel", "Onboarding completed and state updated.")
+            Timber.d("OnboardingViewModel", "Onboarding completed and state updated.")
 
         }
     }
