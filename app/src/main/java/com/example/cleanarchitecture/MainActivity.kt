@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cleanarchitecture.data.remote.ApiService
 import com.example.cleanarchitecture.ui.screens.DevelopersScreen
+import com.example.cleanarchitecture.ui.screens.FlowScreen
 import com.example.cleanarchitecture.ui.screens.OnBoardingScreen
 import com.example.cleanarchitecture.ui.theme.CleanArchitectureTheme
 import com.example.cleanarchitecture.ui.viewmodels.DeveloperViewModel
@@ -27,16 +28,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val viewModel by viewModels<DeveloperViewModel>()
-
-
-
-
 
         setContent {
             CleanArchitectureTheme {
@@ -47,14 +40,18 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "onboarding" ) {
+                    NavHost(navController = navController, startDestination = "onboarding") {
                         composable("onboarding") {
                             val viewModel: OnBoardingViewModel = hiltViewModel()
                             OnBoardingScreen(viewModel = viewModel, navController = navController)
                         }
                         composable("main") {
-                            DevelopersScreen()
+                            DevelopersScreen(onNavigateToFlowScreen = {navController.navigate(route = "flow")})
                         }
+                        composable("flow"){
+                            FlowScreen()
+                        }
+
                     }
 
                 }

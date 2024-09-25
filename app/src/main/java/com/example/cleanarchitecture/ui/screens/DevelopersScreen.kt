@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,16 +39,24 @@ import com.example.cleanarchitecture.domain.model.Developers
 import com.example.cleanarchitecture.ui.viewmodels.DeveloperViewModel
 
 @Composable
-fun DevelopersScreen(){
+fun DevelopersScreen(onNavigateToFlowScreen: () -> Unit){
 val viewModel: DeveloperViewModel = hiltViewModel()
 val developers by viewModel.data.collectAsState()
 
 Box(modifier = Modifier.fillMaxSize()){
-    LazyColumn {
-        items(developers){
-            developer -> CardView(developer, onFavouriteClicked = {viewModel.toggleFavourite(developer.username,!developer.isFavourite)})
+    Column {
+        LazyColumn {
+            items(developers){
+                    developer -> CardView(developer, onFavouriteClicked = {viewModel.toggleFavourite(developer.username,!developer.isFavourite)})
+            }
+        }
+        Button(onClick = onNavigateToFlowScreen) {
+            Text(text = "Go to Flow Screen")
+
         }
     }
+
+
 }
 }
 
@@ -66,7 +75,9 @@ Row(modifier = Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVerti
 
     Spacer(modifier = Modifier.width(5.dp))
 
-    Column(modifier = Modifier.padding(5.dp).weight(1f)) {
+    Column(modifier = Modifier
+        .padding(5.dp)
+        .weight(1f)) {
 
 //        Text(text = developer.name)
         
