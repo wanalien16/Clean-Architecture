@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cleanarchitecture.data.remote.ApiService
+import com.example.cleanarchitecture.ui.screens.ColdFlowUi
 import com.example.cleanarchitecture.ui.screens.DevelopersScreen
 import com.example.cleanarchitecture.ui.screens.FlowScreen
 import com.example.cleanarchitecture.ui.screens.OnBoardingScreen
@@ -49,7 +50,10 @@ class MainActivity : ComponentActivity() {
                             DevelopersScreen(onNavigateToFlowScreen = {navController.navigate(route = "flow")})
                         }
                         composable("flow"){
-                            FlowScreen()
+                            FlowScreen(onNavigateToColdUi = {navController.navigate(route = "cold")})
+                        }
+                        composable("cold"){
+//                            ColdFlowUi()
                         }
 
                     }

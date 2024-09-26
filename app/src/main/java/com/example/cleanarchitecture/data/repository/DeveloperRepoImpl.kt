@@ -8,6 +8,8 @@ import com.example.cleanarchitecture.data.remote.ApiService
 import com.example.cleanarchitecture.domain.mappers.DevelopersMapper
 import com.example.cleanarchitecture.domain.model.Developers
 import com.example.cleanarchitecture.domain.repository.DeveloperRepo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class DeveloperRepoImpl @Inject constructor(private val apiService: ApiService, private val repoDao: DeveloperDao): DeveloperRepo {
@@ -15,9 +17,6 @@ class DeveloperRepoImpl @Inject constructor(private val apiService: ApiService, 
 
 
     override suspend fun getDevelopersData(): List<Developers> {
-
-
-
 
             val response = kotlin.runCatching { apiService.getDevelopers("en") }.getOrElse {
                 Log.e("error is", "${it.localizedMessage}")
@@ -39,6 +38,10 @@ class DeveloperRepoImpl @Inject constructor(private val apiService: ApiService, 
 
     }
 
+    override suspend fun getDevelopersFromLocal(): Flow<List<DeveloperTable>> = flow {
+        val localDevs = repoDao.getAllDevelopers()
+        emit(localDevs)
+    }
 
 
 
